@@ -39,4 +39,7 @@ Alterar package.json no Client
 },
 
 At the Client:
-npm install --save redux react-redux react-router-dom@4.0.0
+npm install --save redux react-redux react-router-dom@4.2.2
+npm install --save @axetroy/react-download crypto-js react-simple-file-input
+
+also available, but not used > js-file-download
