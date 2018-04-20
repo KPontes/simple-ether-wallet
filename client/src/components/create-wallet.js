@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Download from "@axetroy/react-download";
 import CryptoJS from "crypto-js";
+import moment from "moment";
 
 import { createWallet } from "../utils/ethereum";
 
@@ -24,19 +25,22 @@ class CreateWallet extends Component {
 
   encryptObj(obj, key) {
     // Encrypt
-    var cipherText = CryptoJS.AES.encrypt(JSON.stringify(obj), key);
-    cipherText = cipherText.toString();
+    var cipherText = CryptoJS.AES.encrypt(
+      JSON.stringify(obj),
+      "12345678"
+    ).toString();
     return cipherText;
   }
 
   decrypt(ciphertext, key) {
     //Decrypt
-    var bytes = CryptoJS.AES.decrypt(ciphertext, key);
+    var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), "12345678");
     var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
     return decryptedText;
   }
 
   renderPartial(cipherText, keyObj) {
+    var fileExtension = moment().format("YYYYMMDDHHmmss") + ".txt";
     return (
       <div class="card text-left">
         <div class="card-header">
@@ -85,7 +89,10 @@ class CreateWallet extends Component {
           <table>
             <tr>
               <td>
-                <Download file="cipher.md" content={cipherText}>
+                <Download
+                  file={"SEW-encrypted-" + fileExtension}
+                  content={cipherText}
+                >
                   <button type="button" class="btn btn-danger">
                     Save Encrypted results table to local file
                   </button>
@@ -93,7 +100,10 @@ class CreateWallet extends Component {
               </td>
               <td />
               <td>
-                <Download file="plain.md" content={JSON.stringify(keyObj)}>
+                <Download
+                  file={"SEW-plaintext-" + fileExtension}
+                  content={JSON.stringify(keyObj)}
+                >
                   <button type="button" class="btn btn-danger">
                     Save Plain Text results table to local file
                   </button>
@@ -110,7 +120,7 @@ class CreateWallet extends Component {
   render() {
     var partial = <div />;
     if (this.state.displayResult) {
-      //stringfy json object for further saving
+      //stringfy json object for further saving on file
       var keyObj = {
         address: this.state.address,
         privateKey: this.state.privateKey,
@@ -118,10 +128,12 @@ class CreateWallet extends Component {
       };
 
       const cipherText = this.encryptObj(keyObj, this.state.password);
-      keyObj = JSON.parse(this.decrypt(cipherText, this.state.password));
+      const plainObj = JSON.parse(
+        this.decrypt(cipherText, this.state.password)
+      );
 
       //display query results and save button
-      var partial = this.renderPartial(cipherText, keyObj);
+      var partial = this.renderPartial(cipherText, plainObj);
     }
 
     return (
@@ -161,7 +173,7 @@ class CreateWallet extends Component {
 
   onInputChange(password) {
     this.setState({
-      password,
+      password: password.trim(),
       address: "",
       privateKey: "",
       displayResult: false,
@@ -180,7 +192,6 @@ class CreateWallet extends Component {
     this.setState({ btnText: "Processing ..." });
 
     const wallet = await createWallet(this.state.password);
-    console.log(wallet);
 
     this.setState({
       btnText: "Create",

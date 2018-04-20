@@ -34,5 +34,29 @@
 }
 
 .input-margin {
+  width: 95%;
   margin: 5px 5px 5px 5px;
+  border: 0px solid black;
+}
+
+.input-danger {
+  color: #999;
+}
+
+.presentation-div {
+  background-color: #ffeecc;
+  border: 2px solid black;
+  margin: 10px;
+  padding: 5px;
+}
+
+.card-table {
+  display: table;
+}
+
+.card-cell {
+  display: table-cell;
+}
+.card-row {
+  display: table-row;
 }

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import Header from "../components/header";
-import Footer from "../components/footer";
-import CreateWallet from "../components/create-wallet";
+import Header from "./header";
+import Footer from "./footer";
+import CreateWallet from "./create-wallet";
 
 class TemplateCreateWallet extends Component {
   render() {
