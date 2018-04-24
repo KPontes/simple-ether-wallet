@@ -5,8 +5,9 @@ import TemplateHome from "./template-home";
 import TemplateBalance from "./template-balance";
 import TemplateCreateWallet from "./template-create-wallet";
 import TemplateSendEther from "./template-send-ether";
+import TemplateReceiveEther from "./template-receive-ether";
 
-const SurveyNew = () => <h2>SurveyNew</h2>;
+const Teste = () => <h2>SurveyNew</h2>;
 
 export default class App extends Component {
   render() {
@@ -22,7 +23,8 @@ export default class App extends Component {
               component={TemplateCreateWallet}
             />
             <Route path="/sendether" component={TemplateSendEther} />
-            <Route path="/surveys/new" component={SurveyNew} />
+            <Route path="/receiveether" component={TemplateReceiveEther} />
+            <Route path="/teste" component={Teste} />
           </div>
         </BrowserRouter>
       </div>

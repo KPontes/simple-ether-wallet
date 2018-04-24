@@ -4,6 +4,8 @@ import CryptoJS from "crypto-js";
 import moment from "moment";
 
 import { createWallet } from "../utils/ethereum";
+import { encryptObj, decrypt } from "../utils/cipher";
+import Help from "./help";
 
 //Class component have props available everywhere and must be used when you need to keep state
 class CreateWallet extends Component {
@@ -20,27 +22,10 @@ class CreateWallet extends Component {
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    //this.onBtnSave = this.onBtnSave.bind(this);
-  }
-
-  encryptObj(obj, key) {
-    // Encrypt
-    var cipherText = CryptoJS.AES.encrypt(
-      JSON.stringify(obj),
-      "12345678"
-    ).toString();
-    return cipherText;
-  }
-
-  decrypt(ciphertext, key) {
-    //Decrypt
-    var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), "12345678");
-    var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-    return decryptedText;
   }
 
   renderPartial(cipherText, keyObj) {
-    var fileExtension = moment().format("YYYYMMDDHHmmss") + ".txt";
+    var fileExtension = moment().format("YYYYMMDDHHmmss") + ".sew";
     return (
       <div class="card text-left">
         <div class="card-header">
@@ -116,8 +101,9 @@ class CreateWallet extends Component {
     );
   }
 
-  // Mandatory render method
   render() {
+    const helpData = this.showHelpData();
+
     var partial = <div />;
     if (this.state.displayResult) {
       //stringfy json object for further saving on file
@@ -127,10 +113,8 @@ class CreateWallet extends Component {
         mnemonic: this.state.mnemonic
       };
 
-      const cipherText = this.encryptObj(keyObj, this.state.password);
-      const plainObj = JSON.parse(
-        this.decrypt(cipherText, this.state.password)
-      );
+      const cipherText = encryptObj(keyObj, this.state.password);
+      const plainObj = JSON.parse(decrypt(cipherText, this.state.password));
 
       //display query results and save button
       var partial = this.renderPartial(cipherText, plainObj);
@@ -138,6 +122,7 @@ class CreateWallet extends Component {
 
     return (
       <div className="container">
+        <Help helpData={helpData} />
         <form onSubmit={this.onFormSubmit}>
           <label> Enter a password: </label>
           <div className="input-group">
@@ -160,7 +145,7 @@ class CreateWallet extends Component {
           </div>
         </form>
         <p>
-          <font color="red">
+          <font color="#873468">
             Make sure you remember your password, you will need it to access
             your funds. We do not save it, so we can not recover it for you.
           </font>
@@ -202,6 +187,38 @@ class CreateWallet extends Component {
       displayResult: true
     });
     this.refs.btn.removeAttribute("disabled");
+  }
+
+  showHelpData() {
+    return (
+      <div>
+        <p>
+          Type in your password, and the Create Wallet will generate (1) an
+          ethereum address, (2) the private key to sign transactions from this
+          address, and (3) a mnemonic recover passphrase.
+        </p>
+        <p>
+          This three pieces of information provides the access to your ethereum
+          funds. Think of an address as a bank account and the private key as
+          your access credentials to moviment the funds on that account. The
+          mnemonic is a way to recover address and private key in case of loss.
+        </p>
+        <p>
+          Once the wallet has beem created, you will be presented with a button
+          for saving this information locally on your computer as an encrypted
+          file, and another button to save as a plain text file. Save those
+          files in a safe storage, make backup, and also print the result
+          screen. The only way to access your encrypted file is with the
+          password typed to generate the wallet. Make sure you never edit your
+          encrypted file, avoiding to corrupt it.
+        </p>
+        <p>
+          SEW does not hold your keys, so we can not recover keys or reset
+          password. Note that SEW can not access your account nor reverse
+          transactions.
+        </p>
+      </div>
+    );
   }
 }
 

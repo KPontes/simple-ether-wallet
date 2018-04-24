@@ -4,11 +4,11 @@ import Header from "./header";
 import Footer from "./footer";
 import SendEtherChoice from "./send-ether-choice";
 
-class TemplateCreateWallet extends Component {
+class TemplateSendEther extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Header />
+        <Header activeMenuItem={"sendether"} />
         <SendEtherChoice />
         <Footer />
       </div>
@@ -16,4 +16,4 @@ class TemplateCreateWallet extends Component {
   }
 }
 
-export default TemplateCreateWallet;
+export default TemplateSendEther;

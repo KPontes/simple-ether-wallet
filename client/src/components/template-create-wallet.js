@@ -8,7 +8,7 @@ class TemplateCreateWallet extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Header />
+        <Header activeMenuItem={"createwallet"} />
         <CreateWallet />
         <Footer />
       </div>

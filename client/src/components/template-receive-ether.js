@@ -2,18 +2,18 @@ import React, { Component } from "react";
 
 import Header from "./header";
 import Footer from "./footer";
-import Home from "./home";
+import ReceiveEther from "./receive-ether";
 
-class TemplateHome extends Component {
+class TemplateReceiveEther extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Header activeMenuItem={"home"} />
-        <Home />
+        <Header activeMenuItem={"receiveether"} />
+        <ReceiveEther />
         <Footer />
       </div>
     );
   }
 }
 
-export default TemplateHome;
+export default TemplateReceiveEther;

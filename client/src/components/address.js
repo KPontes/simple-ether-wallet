@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { viewAddressInfo } from "../utils/ethereum";
+import Help from "./help";
 
 //Class component have props available everywhere and must be used when you need to keep state
 class Address extends Component {
@@ -9,22 +10,25 @@ class Address extends Component {
     this.state = {
       address: "",
       previousAddress: "",
-      balance: "0.00",
+      balance: "",
       btnText: "View Info"
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    //this.onBtnViewClick = this.onBtnViewClick.bind(this);
   }
-  // Mandatory render method
+
   render() {
+    const helpData = this.showHelpData();
+    const partialResultPanel = this.partialResultPanel();
     return (
-      <div className="form-group">
+      <div className="container form-group">
+        <Help helpData={helpData} />
+
         <form onSubmit={this.onFormSubmit}>
-          <label> Address: </label>
+          <label style={{ fontSize: "large" }}> Address: </label>
           <div className="input-group">
             <input
-              placeholder="paste your public address"
+              placeholder="type or paste your public address"
               className="form-control"
               value={this.state.address}
               onChange={event => this.onInputChange(event.target.value)}
@@ -40,18 +44,13 @@ class Address extends Component {
             </span>
           </div>
         </form>
-
-        <div text-align="left">
-          <p />
-          <h4> Balance: {this.state.balance} </h4>
-          <h5> Address: {this.state.previousAddress} </h5>
-        </div>
+        {partialResultPanel}
       </div>
     );
   }
 
   onInputChange(address) {
-    this.setState({ address, balance: "0.00", previousAddress: "" });
+    this.setState({ address, balance: "", previousAddress: "" });
   }
 
   async onFormSubmit(event) {
@@ -69,6 +68,27 @@ class Address extends Component {
       address: ""
     });
     this.refs.btn.removeAttribute("disabled");
+  }
+
+  partialResultPanel() {
+    if (this.state.balance) {
+      return (
+        <div text-align="left">
+          <p />
+          <h4> Balance: {this.state.balance} </h4>
+          <h5> Address: {this.state.previousAddress} </h5>
+        </div>
+      );
+    } else return null;
+  }
+
+  showHelpData() {
+    return (
+      <div>
+        Type in or paste your public ethereum address, and press the view button
+        to retrieve the balance information.
+      </div>
+    );
   }
 }
 

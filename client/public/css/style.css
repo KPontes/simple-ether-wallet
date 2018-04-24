@@ -29,8 +29,8 @@
 .btn-margin {
   margin-top: 5px;
   margin-bottom: 5px;
-  margin-right: 5px;
-  margin-left: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .input-margin {
@@ -49,6 +49,40 @@
   margin: 10px;
   padding: 5px;
 }
+.carrousel-div {
+  width: 95%;
+  height: 150px;
+  align: center;
+  font-style: italic;
+  vertical-align: middle;
+  background-color: #dde2c8;
+  border: 1px solid black;
+  margin: 10px;
+  padding: 5px;
+}
+
+.wrapper {
+  height: 100%;
+  min-height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.wrapper div {
+  padding: 15px;
+  border: 0px solid rgba(0, 0, 0, 0.3);
+}
+
+.home-div {
+  background-color: #5b6375;
+  color: white;
+  margin: 15px;
+  padding: 10px;
+}
 
 .card-table {
   display: table;
@@ -59,4 +93,17 @@
 }
 .card-row {
   display: table-row;
+}
+
+.card-help {
+  background-color: #ffdddd;
+  border: 1px solid blue;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  margin-bottom: 20px;
 }

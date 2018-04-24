@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import FileInput from "react-simple-file-input";
-import CryptoJS from "crypto-js";
 
 import { viewAddressInfo } from "../utils/ethereum";
+import { encryptObj, decrypt } from "../utils/cipher";
 import SendEtherPanel from "./send-ether-panel";
+import Help from "./help";
 
 var allowedFileTypes = ["text/plain"]; //, "image/jpeg", "image/gif"];
 
@@ -35,21 +36,9 @@ class SendEtherChoice extends Component {
     };
   }
 
-  encryptObj(obj, key) {
-    // Encrypt
-    var cipherText = CryptoJS.AES.encrypt(JSON.stringify(obj), key).toString();
-    return cipherText;
-  }
-
-  decrypt(ciphertext, key) {
-    //Decrypt
-    var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), key);
-    var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-    return decryptedText;
-  }
-
   // Mandatory render method
   render() {
+    const helpData = this.showHelpData();
     const unlockWithEncryptedFile = this.partialUnlockEncryptedFile();
     if (!_.isEmpty(this.state.keysObj)) {
       const unlockWithEncryptedFile = this.partialUnlockEncryptedFile();
@@ -57,6 +46,7 @@ class SendEtherChoice extends Component {
 
     return (
       <div className="container mb-5">
+        <Help helpData={helpData} />
         <label> Enter the password to unlock your keys file: </label>
         <div className="input-group">
           <input
@@ -108,7 +98,7 @@ class SendEtherChoice extends Component {
     //   "U2FsdGVkX19ZlOQsteyUdA+3fq2VqY0KQFzcYK3xcfzss0MvBTmXefq11Avc9p0CEOxanKnRBRELVemrx9b6eN9E+soxRIllI6y4SDZbroD3OWIWcb6vfzNN8TkcSBZQr//hF2gDCRoVbl/VQQKqH5iIwJH9AZxi/x8/N1U49XUcPLJs/VY3cpmBIlrEWWHvZG1UwBueiZxPF2G9uyBkEYI+I+e/sqqHprKWun3hpMehvjHWvX0YsxFUdEGrt2/L0NybE+K202nhRm01pAqXvzuxshL3IKRTTGI2pyRIiXV+hX9JLXzAgpG0IbCNFSFbNG23Bybz3V7fcGO5hx1N6w==";
     //console.log("Compara", cipher == cipher2);
 
-    var plainText = this.decrypt(cipher, this.state.password);
+    var plainText = decrypt(cipher, this.state.password);
     var keysObj = JSON.parse(plainText);
     const balance = await viewAddressInfo(keysObj.address);
     keysObj["balance"] = balance;
@@ -141,6 +131,28 @@ class SendEtherChoice extends Component {
     this.setState({
       progressPercent: event.loaded / event.total * 100
     });
+  }
+
+  showHelpData() {
+    return (
+      <div>
+        <p>
+          Type in your password and you will be presented with three choices to
+          unlock your wallet: (1) select your encrypted keys file (2) type or
+          paste your private key, and (3) type or paste your mnemonic recover
+          passphrase.
+        </p>
+        <p>
+          Once your wallet has been unlocked, you will be presented with your
+          balance in the Send Ether Panel, and the inputs for the amount and the
+          destination address to whom the funds will be transfered.
+        </p>
+        <p>
+          The Results Panel will provide you a confirmation with the transaction
+          id.
+        </p>
+      </div>
+    );
   }
 }
 export default SendEtherChoice;
