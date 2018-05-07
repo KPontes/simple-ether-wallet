@@ -75,8 +75,18 @@ class Address extends Component {
       return (
         <div text-align="left">
           <p />
-          <h4> Balance: {this.state.balance} </h4>
+          <h5> Balance: {this.state.balance} </h5>
           <h5> Address: {this.state.previousAddress} </h5>
+          <p>
+            <a
+              href={`https://etherscan.io/address/${
+                this.state.previousAddress
+              }`}
+              target="_blank"
+            >
+              Click for Transaction History
+            </a>
+          </p>
         </div>
       );
     } else return null;
@@ -86,7 +96,8 @@ class Address extends Component {
     return (
       <div>
         Type in or paste your public ethereum address, and press the view button
-        to retrieve the balance information.
+        to retrieve the balance information. You will also be provided a link
+        for the transaction history of your address at etherscan.io .
       </div>
     );
   }

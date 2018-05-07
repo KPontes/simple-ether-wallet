@@ -24,7 +24,7 @@ class SendEtherPanel extends Component {
   renderPanelPartial() {
     return (
       <div className="presentation-div">
-        SEND ETHER PANEL <br />
+        UNLOCKED WALLET - SEND ETHER PANEL <br />
         <div className="card-table input-margin">
           <div className="row">
             <div className="col-md-2">
@@ -70,6 +70,7 @@ class SendEtherPanel extends Component {
         <div align="right" className="mr-5">
           <button
             type="button"
+            ref="btn"
             class="btn btn-primary"
             onClick={event => this.handleSendClick()}
           >
@@ -80,7 +81,6 @@ class SendEtherPanel extends Component {
     );
   }
 
-  // Mandatory render method
   render() {
     if (this.props.keysObj.address) {
       const partial = this.renderPanelPartial();
@@ -96,6 +96,7 @@ class SendEtherPanel extends Component {
   }
 
   async handleSendClick(event) {
+    this.refs.btn.setAttribute("disabled", "disabled");
     this.setState({ btSend: "Loading ..." });
     const transaction = await sendEther(
       this.props.keysObj.privateKey,
@@ -104,6 +105,7 @@ class SendEtherPanel extends Component {
     );
 
     this.setState({ transaction, btSend: "SEND TRANSACTION" });
+    //this.refs.btn.removeAttribute("disabled");
   }
 
   onInputChange(event) {

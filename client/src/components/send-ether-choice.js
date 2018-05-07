@@ -27,11 +27,17 @@ class SendEtherChoice extends Component {
     this.showProgressBar = this.showProgressBar.bind(this);
     this.updateProgressBar = this.updateProgressBar.bind(this);
     this.handleFileSelected = this.handleFileSelected.bind(this);
+    this.handleOptionChange = this.handleOptionChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onPkButtonClick = this.onPkButtonClick.bind(this);
 
     this.state = {
       cancelButtonClicked: false,
       fileContents: "",
       password: "",
+      pk_mnemonic: "",
+      btPkMnemonic: "Click to Unlock",
+      selectedOption: "",
       keysObj: {}
     };
   }
@@ -39,7 +45,12 @@ class SendEtherChoice extends Component {
   // Mandatory render method
   render() {
     const helpData = this.showHelpData();
-    const unlockWithEncryptedFile = this.partialUnlockEncryptedFile();
+    const showChoices = this.showChoices();
+    const getPassword = this.partialGetPassword();
+    const getPkOrMnemonic = this.partialGetPkOrMnemonic();
+    const unlockWithFile = this.partialUnlockEncryptedFile();
+    const unlockWithPk = this.partialUnlockWithPkOrMnemonic();
+
     if (!_.isEmpty(this.state.keysObj)) {
       const unlockWithEncryptedFile = this.partialUnlockEncryptedFile();
     }
@@ -47,24 +58,102 @@ class SendEtherChoice extends Component {
     return (
       <div className="container mb-5">
         <Help helpData={helpData} />
-        <label> Enter the password to unlock your keys file: </label>
-        <div className="input-group">
-          <input
-            placeholder="Type a minimum eight digits password"
-            type="password"
-            className="form-control"
-            value={this.state.password}
-            onChange={event => this.onInputChange(event.target.value)}
-          />
-        </div>
-        {unlockWithEncryptedFile}
+        {showChoices}
+        {getPassword}
+        {unlockWithFile}
+        {getPkOrMnemonic}
+        {unlockWithPk}
         <SendEtherPanel keysObj={this.state.keysObj} />
       </div>
     );
   }
 
+  partialGetPkOrMnemonic() {
+    if (this.state.selectedOption !== "option1") {
+      return (
+        <div>
+          <label>
+            {" "}
+            Paste your private key or mnemonic passphrase to unlock your wallet:{" "}
+          </label>
+          <div className="input-group">
+            <input
+              placeholder="Type / paste your private key or mnemonic passphrase"
+              type="password"
+              id="pk_mnemonic"
+              className="form-control"
+              value={this.state.pk_mnemonic}
+              onChange={this.onInputChange}
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+
+  partialGetPassword() {
+    if (this.state.selectedOption === "option1") {
+      return (
+        <div>
+          <label> Enter the password to unlock your keys file: </label>
+          <div className="input-group">
+            <input
+              placeholder="Type a minimum eight digits password"
+              type="password"
+              id="password"
+              className="form-control"
+              value={this.state.password}
+              onChange={this.onInputChange}
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+
+  partialUnlockWithPkOrMnemonic() {
+    if (
+      this.state.pk_mnemonic.length >= 50 &&
+      this.state.selectedOption !== "option1"
+    ) {
+      return (
+        <div className="mt-2">
+          Unlock your wallet:
+          <button
+            type="button"
+            class="btn btn-primary btn-margin"
+            onClick={event => this.onPkButtonClick()}
+          >
+            <span>{this.state.btPkMnemonic}</span>
+          </button>
+        </div>
+      );
+    }
+  }
+
+  async onPkButtonClick(event) {
+    this.setState({ btPkMnemonic: "Loading ..." });
+    var keysObj = {};
+    var pos = this.state.pk_mnemonic.indexOf(" ");
+    if (pos === -1) {
+      keysObj["privateKey"] = this.state.pk_mnemonic;
+    } else {
+      keysObj["mnemonic"] = this.state.pk_mnemonic;
+    }
+
+    keysObj = await viewAddressInfo(keysObj);
+    this.setState({
+      keysObj: keysObj,
+      btPkMnemonic: "Click to Unlock",
+      pk_mnemonic: ""
+    });
+  }
+
   partialUnlockEncryptedFile() {
-    if (this.state.password.length >= 8) {
+    if (
+      this.state.password.length >= 8 &&
+      this.state.selectedOption === "option1"
+    ) {
       return (
         <div className="mt-2">
           Unlock your wallet:
@@ -82,7 +171,7 @@ class SendEtherChoice extends Component {
                 onAbort={this.resetCancelButtonClicked}
               />
 
-              <span>Click to get your keys file</span>
+              <span>Click to get your Encrypted keys file</span>
             </label>
           </button>
         </div>
@@ -94,22 +183,23 @@ class SendEtherChoice extends Component {
     var cipher = await event.target.result.toString();
     this.setState({ file: file, fileContents: cipher });
 
-    // var cipher2 =
-    //   "U2FsdGVkX19ZlOQsteyUdA+3fq2VqY0KQFzcYK3xcfzss0MvBTmXefq11Avc9p0CEOxanKnRBRELVemrx9b6eN9E+soxRIllI6y4SDZbroD3OWIWcb6vfzNN8TkcSBZQr//hF2gDCRoVbl/VQQKqH5iIwJH9AZxi/x8/N1U49XUcPLJs/VY3cpmBIlrEWWHvZG1UwBueiZxPF2G9uyBkEYI+I+e/sqqHprKWun3hpMehvjHWvX0YsxFUdEGrt2/L0NybE+K202nhRm01pAqXvzuxshL3IKRTTGI2pyRIiXV+hX9JLXzAgpG0IbCNFSFbNG23Bybz3V7fcGO5hx1N6w==";
-    //console.log("Compara", cipher == cipher2);
-
     var plainText = decrypt(cipher, this.state.password);
     var keysObj = JSON.parse(plainText);
-    const balance = await viewAddressInfo(keysObj.address);
-    keysObj["balance"] = balance;
+    keysObj = await viewAddressInfo(keysObj);
     this.setState({ keysObj: keysObj });
   }
 
-  onInputChange(password) {
+  onInputChange(event) {
     this.setState({
-      password: password.trim()
+      [event.target.id]: event.target.value.trim()
     });
   }
+
+  // onInputChange(password) {
+  //   this.setState({
+  //     password: password.trim()
+  //   });
+  // }
 
   cancelButtonClicked() {
     return this.state.cancelButtonClicked;
@@ -144,8 +234,8 @@ class SendEtherChoice extends Component {
         </p>
         <p>
           Once your wallet has been unlocked, you will be presented with your
-          balance in the Send Ether Panel, and the inputs for the amount and the
-          destination address to whom the funds will be transfered.
+          balance in the Send Ether Panel, and there will be available the
+          inputs for typing the destination address and amount to be transfered.
         </p>
         <p>
           The Results Panel will provide you a confirmation with the transaction
@@ -153,6 +243,62 @@ class SendEtherChoice extends Component {
         </p>
       </div>
     );
+  }
+
+  showChoices() {
+    return (
+      <form>
+        <h5>Select to unlock your Wallet</h5>
+        <div className="radio">
+          <label className="radio-container">
+            <input
+              type="radio"
+              value="option1"
+              checked={this.state.selectedOption === "option1"}
+              onChange={this.handleOptionChange}
+            />
+            With encrypted keys file
+            <span className="checkmark" />
+          </label>
+        </div>
+        <div className="radio">
+          <label className="radio-container">
+            <input
+              type="radio"
+              value="option2"
+              checked={this.state.selectedOption === "option2"}
+              onChange={this.handleOptionChange}
+            />
+            With my private key
+            <span className="checkmark" />
+          </label>
+        </div>
+        <div className="radio">
+          <label className="radio-container">
+            <input
+              type="radio"
+              value="option3"
+              checked={this.state.selectedOption === "option3"}
+              onChange={this.handleOptionChange}
+            />
+            With mnemonic passphrase
+            <span className="checkmark" />
+          </label>
+        </div>
+      </form>
+    );
+  }
+
+  handleOptionChange(changeEvent) {
+    this.setState({
+      selectedOption: changeEvent.target.value,
+      cancelButtonClicked: false,
+      fileContents: "",
+      password: "",
+      pk_mnemonic: "",
+      btPkMnemonic: "Click to Unlock",
+      keysObj: {}
+    });
   }
 }
 export default SendEtherChoice;

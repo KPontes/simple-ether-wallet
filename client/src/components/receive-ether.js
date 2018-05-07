@@ -5,8 +5,9 @@ const ReceiveEther = props => {
     <div className="container">
       <p>RECEIVE ETHER</p>
       <p>
-        Provide ONLY your Address (never the private key nor the mnemonic) to
-        the other part that will transfer some Ether amount for you.
+        Provide ONLY your Address (
+        <font color="#873468"> never the private key nor the mnemonic</font> )
+        to the other part that will transfer some Ether amount for you.
       </p>
       <p>You may check your ethereum public address by:</p>
       <ol>

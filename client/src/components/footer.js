@@ -2,11 +2,16 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div class="card text-center">
-      <div class="card-footer text-muted">
-        2018 MIT licensed - Krishnan Lage Pontes
+    <p>
+      <br />
+      <div class="card text-center">
+        <div class="card-footer text-muted">
+          Simple Ether Wallet is a friendly client-side interface to interact
+          with the Ethereum Blockchain Network.
+          <p>Free, Open Source - 2018 MIT license</p>
+        </div>
       </div>
-    </div>
+    </p>
   );
 };
 

@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 
 const Header = props => {
   return (
-    <div>
+    <div style={{ margin: "10px" }}>
       <ul className="nav nav-pills nav-fill">
+        <li className="nav-item">
+          <img src="/images/SEW-logo.png" height="42" width="70" />
+        </li>
         <li className="nav-item">
           <Link
             to="/"
@@ -68,9 +71,15 @@ const Header = props => {
           </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link disabled" href="#">
+          <Link
+            to="/contact"
+            id="contact"
+            className={
+              props.activeMenuItem == "contact" ? "nav-link active" : "nav-link"
+            }
+          >
             Contact
-          </a>
+          </Link>
         </li>
       </ul>
       <hr style={{ border: "1px solid black" }} />
