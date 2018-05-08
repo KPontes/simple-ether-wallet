@@ -175,18 +175,22 @@ class CreateWallet extends Component {
 
     this.refs.btn.setAttribute("disabled", "disabled");
     this.setState({ btnText: "Processing ..." });
-
-    const wallet = await createWallet(this.state.password);
-
+    try {
+      const wallet = await createWallet(this.state.password);
+      this.setState({
+        address: wallet.address,
+        mnemonic: wallet.mnemonic,
+        privateKey: wallet.privateKey,
+        displayResult: true
+      });
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
+    this.refs.btn.removeAttribute("disabled");
     this.setState({
       btnText: "Create",
-      address: wallet.address,
-      password: "",
-      mnemonic: wallet.mnemonic,
-      privateKey: wallet.privateKey,
-      displayResult: true
+      password: ""
     });
-    this.refs.btn.removeAttribute("disabled");
   }
 
   showHelpData() {

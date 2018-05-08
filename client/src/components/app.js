@@ -18,6 +18,7 @@ export default class App extends Component {
           <div>
             <Route exact path="/" component={TemplateHome} />
             <Route exact path="/balance" component={TemplateBalance} />
+            <Route path="/balance/:address" component={TemplateBalance} />
             <Route
               exact
               path="/createwallet"

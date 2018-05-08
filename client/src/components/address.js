@@ -17,6 +17,14 @@ class Address extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      address: this.props.address,
+      balance: "",
+      previousAddress: ""
+    });
+  }
+
   render() {
     const helpData = this.showHelpData();
     const partialResultPanel = this.partialResultPanel();
@@ -56,14 +64,25 @@ class Address extends Component {
   async onFormSubmit(event) {
     event.preventDefault();
 
-    this.refs.btn.setAttribute("disabled", "disabled");
-    this.setState({ btnText: "Loading ..." });
-
-    const balance = await viewAddressInfo(this.state.address);
+    try {
+      if (this.state.address.length !== 42) {
+        throw new Error("Invalid ether address");
+      }
+      this.refs.btn.setAttribute("disabled", "disabled");
+      this.setState({ btnText: "Loading ..." });
+      var keysObj = {
+        address: this.state.address
+      };
+      keysObj = await viewAddressInfo(keysObj);
+      this.setState({
+        previousAddress: this.state.address,
+        balance: keysObj.balance
+      });
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
 
     this.setState({
-      previousAddress: this.state.address,
-      balance: balance,
       btnText: "View Info",
       address: ""
     });

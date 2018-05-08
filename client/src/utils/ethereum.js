@@ -11,30 +11,40 @@ const providers = ethers.providers;
 // image mansion angle choose sauce net true dice truck wing ritual alter
 
 export async function viewAddressInfo(keysObj) {
-  //query balance by address or pk
-  if (keysObj.address) {
-    const provider = providers.getDefaultProvider(NETWORK);
-    var balance = await provider.getBalance(keysObj.address);
-  } else {
-    if (keysObj.privateKey) {
-      var wallet = new ethers.Wallet(keysObj.privateKey);
+  try {
+    //query balance by address or pk
+    if (keysObj.address) {
+      const provider = providers.getDefaultProvider(NETWORK);
+      var balance = await provider.getBalance(keysObj.address);
     } else {
-      var wallet = new ethers.Wallet.fromMnemonic(keysObj.mnemonic);
+      if (keysObj.privateKey) {
+        var wallet = new ethers.Wallet(keysObj.privateKey);
+      } else {
+        var wallet = new ethers.Wallet.fromMnemonic(keysObj.mnemonic);
+      }
+      wallet.provider = ethers.providers.getDefaultProvider(NETWORK);
+      var balance = await wallet.getBalance();
+      keysObj["address"] = await wallet.getAddress();
+      keysObj["privateKey"] = wallet.privateKey;
     }
-    wallet.provider = ethers.providers.getDefaultProvider(NETWORK);
-    var balance = await wallet.getBalance();
-    keysObj["address"] = await wallet.getAddress();
+    // balance is a BigNumber (in wei); format it as a string (in ether)
+    const etherString = ethers.utils.formatEther(balance);
+    keysObj["balance"] = etherString;
+    return keysObj;
+  } catch (e) {
+    console.log("viewAddressInfo error: ", e);
+    throw e;
   }
-  // balance is a BigNumber (in wei); format it as a string (in ether)
-  const etherString = ethers.utils.formatEther(balance);
-  keysObj["balance"] = etherString;
-  return keysObj;
 }
 
 export async function createWallet() {
-  //const wallet = await ethers.Wallet.fromBrainWallet(username, password);
-  const wallet = await ethers.Wallet.createRandom();
-  return wallet;
+  try {
+    const wallet = await ethers.Wallet.createRandom();
+    return wallet;
+  } catch (e) {
+    console.log("createWallet error: ", e);
+    throw e;
+  }
 }
 
 export async function sendEther(pk, toAddress, etherValue) {
@@ -47,6 +57,12 @@ export async function sendEther(pk, toAddress, etherValue) {
     gasLimit: 21000
     //gasPrice: utils.bigNumberify("20000000000")
   };
-  var transaction = await wallet.send(toAddress, amount, options);
-  return transaction;
+  try {
+    var transaction = await wallet.send(toAddress, amount, options);
+    console.log("transaction ", transaction);
+    return transaction;
+  } catch (e) {
+    console.log("sendEther error: ", e);
+    throw e;
+  }
 }

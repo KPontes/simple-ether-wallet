@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 import ethers from "ethers";
 
 //Class component have props available everywhere and must be used when you need to keep state
 class SendEtherResult extends Component {
   constructor(props) {
     super(props);
-
-    this.handleBalanceClick = this.handleBalanceClick.bind(this);
   }
 
   render() {
     if (this.props.transaction.hash) {
+      var toAddress = "/balance/" + this.props.address;
       return (
         <div className="presentation-div">
           TRANSACTION RESULTS FROM THE BLOCKCHAIN <br />
@@ -44,23 +44,16 @@ class SendEtherResult extends Component {
             </div>
           </div>
           <div align="right" className="mr-5">
-            <button
-              type="button"
-              class="btn btn-primary"
-              onClick={event => this.handleBalanceClick()}
-            >
-              VIEW NEW BALANCE
-            </button>
+            <span> Wait two minutes and </span>
+            <Link to={toAddress} id="balance">
+              view New Balance
+            </Link>
           </div>
         </div>
       );
     } else {
       return null;
     }
-  }
-
-  handleBalanceClick(event) {
-    alert("REDIRECT TO BALANCE");
   }
 }
 

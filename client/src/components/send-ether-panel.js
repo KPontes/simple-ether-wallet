@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import validator from "validator";
 
 import { sendEther, viewAddressInfo } from "../utils/ethereum";
 import SendEtherResult from "./send-ether-result";
@@ -17,14 +18,25 @@ class SendEtherPanel extends Component {
       inputToAddress: "",
       inputEtherValue: "",
       transaction: {},
+      errorMessage: "",
       btSend: "SEND TRANSACTION"
+    };
+  }
+
+  componentWillUnmount() {
+    this.state = {
+      keysObj: {},
+      inputToAddress: "",
+      inputEtherValue: "",
+      transaction: {},
+      errorMessage: ""
     };
   }
 
   renderPanelPartial() {
     return (
       <div className="presentation-div">
-        UNLOCKED WALLET - SEND ETHER PANEL <br />
+        <strong>UNLOCKED WALLET - Send Ether Panel </strong> <br />
         <div className="card-table input-margin">
           <div className="row">
             <div className="col-md-2">
@@ -71,11 +83,15 @@ class SendEtherPanel extends Component {
           <button
             type="button"
             ref="btn"
-            class="btn btn-primary"
+            class="btn btn-primary btn-margin"
             onClick={event => this.handleSendClick()}
           >
             {this.state.btSend}
           </button>
+          <p className="btn-margin">
+            {" "}
+            <font color="#873468">{this.state.errorMessage}</font>{" "}
+          </p>
         </div>
       </div>
     );
@@ -87,7 +103,10 @@ class SendEtherPanel extends Component {
       return (
         <div>
           {partial}
-          <SendEtherResult transaction={this.state.transaction} />
+          <SendEtherResult
+            transaction={this.state.transaction}
+            address={this.props.keysObj.address}
+          />
         </div>
       );
     } else {
@@ -96,16 +115,31 @@ class SendEtherPanel extends Component {
   }
 
   async handleSendClick(event) {
-    this.refs.btn.setAttribute("disabled", "disabled");
-    this.setState({ btSend: "Loading ..." });
-    const transaction = await sendEther(
-      this.props.keysObj.privateKey,
-      this.state.inputToAddress,
-      this.state.inputEtherValue
-    );
-
-    this.setState({ transaction, btSend: "SEND TRANSACTION" });
-    //this.refs.btn.removeAttribute("disabled");
+    try {
+      if (!validator.isDecimal(this.state.inputEtherValue)) {
+        throw new Error("Invalid ether number");
+      }
+      if (this.state.inputToAddress.length !== 42) {
+        throw new Error("Invalid ether address");
+      }
+      this.refs.btn.setAttribute("disabled", "disabled");
+      this.setState({ errorMessage: "", btSend: "Loading ..." });
+      const transaction = await sendEther(
+        this.props.keysObj.privateKey,
+        this.state.inputToAddress,
+        this.state.inputEtherValue
+      );
+      this.setState({ transaction, btSend: "Send Transaction" });
+    } catch (e) {
+      this.setState({
+        btSend: "Send Transaction",
+        errorMessage: "Error: " + e.message,
+        inputToAddress: "",
+        inputEtherValue: ""
+      });
+      this.refs.btn.removeAttribute("disabled");
+      //alert(e.name + ": " + e.message);
+    }
   }
 
   onInputChange(event) {

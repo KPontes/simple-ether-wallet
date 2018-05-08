@@ -6,10 +6,11 @@ import Address from "./address";
 
 class TemplateBalance extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="container-fluid">
         <Header activeMenuItem={"balance"} />
-        <Address />
+        <Address address={this.props.match.params.address} />
         <Footer />
       </div>
     );

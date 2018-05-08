@@ -42,6 +42,17 @@ class SendEtherChoice extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.state = {
+      cancelButtonClicked: false,
+      fileContents: "",
+      password: "",
+      pk_mnemonic: "",
+      selectedOption: "",
+      keysObj: {}
+    };
+  }
+
   // Mandatory render method
   render() {
     const helpData = this.showHelpData();
@@ -69,7 +80,10 @@ class SendEtherChoice extends Component {
   }
 
   partialGetPkOrMnemonic() {
-    if (this.state.selectedOption !== "option1") {
+    if (
+      this.state.selectedOption === "option2" ||
+      this.state.selectedOption === "option3"
+    ) {
       return (
         <div>
           <label>
@@ -113,7 +127,7 @@ class SendEtherChoice extends Component {
 
   partialUnlockWithPkOrMnemonic() {
     if (
-      this.state.pk_mnemonic.length >= 50 &&
+      this.state.pk_mnemonic.length >= 60 &&
       this.state.selectedOption !== "option1"
     ) {
       return (
@@ -121,6 +135,7 @@ class SendEtherChoice extends Component {
           Unlock your wallet:
           <button
             type="button"
+            ref="btn"
             class="btn btn-primary btn-margin"
             onClick={event => this.onPkButtonClick()}
           >
@@ -132,6 +147,7 @@ class SendEtherChoice extends Component {
   }
 
   async onPkButtonClick(event) {
+    this.refs.btn.setAttribute("disabled", "disabled");
     this.setState({ btPkMnemonic: "Loading ..." });
     var keysObj = {};
     var pos = this.state.pk_mnemonic.indexOf(" ");
@@ -140,10 +156,20 @@ class SendEtherChoice extends Component {
     } else {
       keysObj["mnemonic"] = this.state.pk_mnemonic;
     }
-
-    keysObj = await viewAddressInfo(keysObj);
+    try {
+      keysObj = await viewAddressInfo(keysObj);
+      this.refs.btn.removeAttribute("disabled");
+      this.setState({
+        keysObj: keysObj
+      });
+    } catch (e) {
+      this.refs.btn.removeAttribute("disabled");
+      this.setState({
+        keysObj: {}
+      });
+      alert("Error unlocking wallet: " + e.message);
+    }
     this.setState({
-      keysObj: keysObj,
       btPkMnemonic: "Click to Unlock",
       pk_mnemonic: ""
     });
@@ -180,13 +206,17 @@ class SendEtherChoice extends Component {
   }
 
   async handleFileSelected(event, file) {
-    var cipher = await event.target.result.toString();
-    this.setState({ file: file, fileContents: cipher });
+    try {
+      var cipher = await event.target.result.toString();
+      this.setState({ file: file, fileContents: cipher });
 
-    var plainText = decrypt(cipher, this.state.password);
-    var keysObj = JSON.parse(plainText);
-    keysObj = await viewAddressInfo(keysObj);
-    this.setState({ keysObj: keysObj });
+      var plainText = decrypt(cipher, this.state.password);
+      var keysObj = JSON.parse(plainText);
+      keysObj = await viewAddressInfo(keysObj);
+      this.setState({ keysObj: keysObj });
+    } catch (e) {
+      alert("Error: Invalid keys file - " + e.message);
+    }
   }
 
   onInputChange(event) {
@@ -194,12 +224,6 @@ class SendEtherChoice extends Component {
       [event.target.id]: event.target.value.trim()
     });
   }
-
-  // onInputChange(password) {
-  //   this.setState({
-  //     password: password.trim()
-  //   });
-  // }
 
   cancelButtonClicked() {
     return this.state.cancelButtonClicked;
