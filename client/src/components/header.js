@@ -82,6 +82,13 @@ const Header = props => {
           </Link>
         </li>
       </ul>
+      <br />
+      <div className="prd-message-div">
+        <font color="red">
+          *** This wallet is on Beta-Test, currently it is using the Rinkeby
+          Test Network. Do not make real Ether operation yet. ***
+        </font>
+      </div>
       <hr style={{ border: "1px solid black" }} />
     </div>
   );

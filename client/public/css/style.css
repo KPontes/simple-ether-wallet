@@ -77,6 +77,12 @@
   border: 0px solid rgba(0, 0, 0, 0.3);
 }
 
+.prd-message-div {
+  border: 0px solid rgba(0, 0, 0, 1);
+  align: center;
+  text-align: center;
+}
+
 .home-div {
   background-color: #5b6375;
   color: white;
