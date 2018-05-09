@@ -4,12 +4,6 @@ import ethers from "ethers";
 const NETWORK = "rinkeby";
 const providers = ethers.providers;
 
-// const address1 = "0x5fEDb99AAe7F1880A7a97b0cbe070231a6678f07";
-// const address2 = "0x3c511616bA2F6bD8Aa4e1e9Cdc20389dC6B6b107";
-// const address3 = "0x85Be6c1f4DE7a2D1de9564086394700ccb7d0852";
-// "0x797336cf22a6171b4cb179d6a9c08e5848cbd1748563bc44ea66c506fb0aef8c"
-// image mansion angle choose sauce net true dice truck wing ritual alter
-
 export async function viewAddressInfo(keysObj) {
   try {
     //query balance by address or pk
