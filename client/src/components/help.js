@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
 class Help extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ class Help extends Component {
         <img
           src="/images/help-icon.png"
           className="cursor-pointer"
+          alt=""
           onClick={this.handleHelp}
         />
         {partialShowHelp}

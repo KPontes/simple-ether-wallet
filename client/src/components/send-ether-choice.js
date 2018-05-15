@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import _ from "lodash";
+//import _ from "lodash";
 import FileInput from "react-simple-file-input";
 
 import { viewAddressInfo } from "../utils/ethereum";
-import { encryptObj, decrypt } from "../utils/cipher";
+import { decrypt } from "../utils/cipher";
 import SendEtherPanel from "./send-ether-panel";
 import Help from "./help";
 
@@ -43,14 +43,14 @@ class SendEtherChoice extends Component {
   }
 
   componentWillUnmount() {
-    this.state = {
+    this.setState({
       cancelButtonClicked: false,
       fileContents: "",
       password: "",
       pk_mnemonic: "",
       selectedOption: "",
       keysObj: {}
-    };
+    });
   }
 
   // Mandatory render method
@@ -62,9 +62,9 @@ class SendEtherChoice extends Component {
     const unlockWithFile = this.partialUnlockEncryptedFile();
     const unlockWithPk = this.partialUnlockWithPkOrMnemonic();
 
-    if (!_.isEmpty(this.state.keysObj)) {
-      const unlockWithEncryptedFile = this.partialUnlockEncryptedFile();
-    }
+    // if (!_.isEmpty(this.state.keysObj)) {
+    //   const unlockWithEncryptedFile = this.partialUnlockEncryptedFile();
+    // }
 
     return (
       <div className="container mb-5">
@@ -136,7 +136,7 @@ class SendEtherChoice extends Component {
           <button
             type="button"
             ref="btn"
-            class="btn btn-primary btn-margin"
+            className="btn btn-primary btn-margin"
             onClick={event => this.onPkButtonClick()}
           >
             <span>{this.state.btPkMnemonic}</span>
@@ -183,7 +183,7 @@ class SendEtherChoice extends Component {
       return (
         <div className="mt-2">
           Unlock your wallet:
-          <button type="button" class="btn btn-primary btn-margin">
+          <button type="button" className="btn btn-primary btn-margin">
             <label>
               <FileInput
                 readAs="text"

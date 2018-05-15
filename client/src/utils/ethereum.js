@@ -1,4 +1,3 @@
-import React from "react";
 import ethers from "ethers";
 
 const NETWORK = "rinkeby";
@@ -7,17 +6,19 @@ const providers = ethers.providers;
 export async function viewAddressInfo(keysObj) {
   try {
     //query balance by address or pk
+    let balance;
+    let wallet;
     if (keysObj.address) {
       const provider = providers.getDefaultProvider(NETWORK);
-      var balance = await provider.getBalance(keysObj.address);
+      balance = await provider.getBalance(keysObj.address);
     } else {
       if (keysObj.privateKey) {
-        var wallet = new ethers.Wallet(keysObj.privateKey);
+        wallet = new ethers.Wallet(keysObj.privateKey);
       } else {
-        var wallet = new ethers.Wallet.fromMnemonic(keysObj.mnemonic);
+        wallet = new ethers.Wallet.fromMnemonic(keysObj.mnemonic);
       }
       wallet.provider = ethers.providers.getDefaultProvider(NETWORK);
-      var balance = await wallet.getBalance();
+      balance = await wallet.getBalance();
       keysObj["address"] = await wallet.getAddress();
       keysObj["privateKey"] = wallet.privateKey;
     }

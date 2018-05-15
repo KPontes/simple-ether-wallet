@@ -19,7 +19,7 @@ class Home extends Component {
           keys into any backend server.
         </div>
         <div align="center">
-          <img src="/images/SEW.jpg" />
+          <img src="/images/SEW.jpg" alt="" />
         </div>
         <p />
 

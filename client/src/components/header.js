@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 
 const Header = props => {
@@ -7,14 +6,14 @@ const Header = props => {
     <div style={{ margin: "10px" }}>
       <ul className="nav nav-pills nav-fill">
         <li className="nav-item">
-          <img src="/images/SEW-logo.png" height="42" width="70" />
+          <img src="/images/SEW-logo.png" height="42" width="70" alt="" />
         </li>
         <li className="nav-item">
           <Link
             to="/"
             id="home"
             className={
-              props.activeMenuItem == "home" ? "nav-link active" : "nav-link"
+              props.activeMenuItem === "home" ? "nav-link active" : "nav-link"
             }
           >
             Home
@@ -25,7 +24,7 @@ const Header = props => {
             to="/createwallet"
             id="createwallet"
             className={
-              props.activeMenuItem == "createwallet"
+              props.activeMenuItem === "createwallet"
                 ? "nav-link active"
                 : "nav-link"
             }
@@ -38,7 +37,9 @@ const Header = props => {
             to="/balance"
             id="balance"
             className={
-              props.activeMenuItem == "balance" ? "nav-link active" : "nav-link"
+              props.activeMenuItem === "balance"
+                ? "nav-link active"
+                : "nav-link"
             }
           >
             view Balance
@@ -49,7 +50,7 @@ const Header = props => {
             to="/sendether"
             id="sendether"
             className={
-              props.activeMenuItem == "sendether"
+              props.activeMenuItem === "sendether"
                 ? "nav-link active"
                 : "nav-link"
             }
@@ -62,7 +63,7 @@ const Header = props => {
             to="/receiveether"
             id="receiveether"
             className={
-              props.activeMenuItem == "receiveether"
+              props.activeMenuItem === "receiveether"
                 ? "nav-link active"
                 : "nav-link"
             }
@@ -75,7 +76,9 @@ const Header = props => {
             to="/contact"
             id="contact"
             className={
-              props.activeMenuItem == "contact" ? "nav-link active" : "nav-link"
+              props.activeMenuItem === "contact"
+                ? "nav-link active"
+                : "nav-link"
             }
           >
             Contact

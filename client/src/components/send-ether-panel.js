@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import _ from "lodash";
 import validator from "validator";
 
-import { sendEther, viewAddressInfo } from "../utils/ethereum";
+import { sendEther } from "../utils/ethereum";
 import SendEtherResult from "./send-ether-result";
 
 //Class component have props available everywhere and must be used when you need to keep state
@@ -19,18 +18,18 @@ class SendEtherPanel extends Component {
       inputEtherValue: "",
       transaction: {},
       errorMessage: "",
-      btSend: "SEND TRANSACTION"
+      btSend: "Send Transaction"
     };
   }
 
   componentWillUnmount() {
-    this.state = {
+    this.setState({
       keysObj: {},
       inputToAddress: "",
       inputEtherValue: "",
       transaction: {},
       errorMessage: ""
-    };
+    });
   }
 
   renderPanelPartial() {
@@ -50,7 +49,7 @@ class SendEtherPanel extends Component {
           </div>
           <div className="row">
             <div className="col-md-2">
-              <label for="toAddress"> Destination Address: </label>
+              <label> Destination Address: </label>
             </div>
             <div className="col-md-10 form-group">
               <input
@@ -83,7 +82,7 @@ class SendEtherPanel extends Component {
           <button
             type="button"
             ref="btn"
-            class="btn btn-primary btn-margin"
+            className="btn btn-primary btn-margin"
             onClick={event => this.handleSendClick()}
           >
             {this.state.btSend}

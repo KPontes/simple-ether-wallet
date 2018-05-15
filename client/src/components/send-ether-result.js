@@ -1,14 +1,9 @@
 import React, { Component } from "react";
-import _ from "lodash";
 import { Link } from "react-router-dom";
 import ethers from "ethers";
 
 //Class component have props available everywhere and must be used when you need to keep state
 class SendEtherResult extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (this.props.transaction.hash) {
       var toAddress = "/balance/" + this.props.address;
@@ -26,7 +21,7 @@ class SendEtherResult extends Component {
             </div>
             <div className="row">
               <div className="col-md-2">
-                <label for="toAddress"> to Address: </label>
+                <label> to Address: </label>
               </div>
               <div className="col-md-10 form-group">
                 <label> {this.props.transaction.to} </label>

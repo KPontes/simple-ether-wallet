@@ -23,6 +23,9 @@ class ControlledCarousel extends React.Component {
       case 3:
         partialSlide = this.getSlide(3);
         break;
+      default:
+        partialSlide = this.getSlide(1);
+        break;
     }
     console.log("props: ", this.props);
 
@@ -58,32 +61,34 @@ class ControlledCarousel extends React.Component {
       case 3:
         this.setState({ slide: 1 });
         break;
+      default:
+        this.setState({ slide: 2 });
+        break;
     }
   }
 
   getSlide(slide) {
-    console.log("slide", slide);
     var result = "";
     switch (slide) {
       case 1: {
-        console.log("Entrei 1");
         result = <div id="first">{this.props.slides[0]}</div>;
         break;
       }
 
       case 2: {
-        console.log("Entrei 2");
         result = <div id="second">{this.props.slides[1]}</div>;
         break;
       }
 
       case 3: {
-        console.log("Entrei 3");
         result = <div id="third">{this.props.slides[2]}</div>;
         break;
       }
+      default: {
+        result = <div id="first">{this.props.slides[0]}</div>;
+        break;
+      }
     }
-    console.log("result", result);
     return result;
   }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Download from "@axetroy/react-download";
-import CryptoJS from "crypto-js";
 import moment from "moment";
 
 import { createWallet } from "../utils/ethereum";
@@ -24,11 +23,22 @@ class CreateWallet extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
+  componentWillUnmount() {
+    this.setState({
+      address: "",
+      password: "",
+      privateKey: "",
+      mnemonic: "",
+      displayResult: false,
+      btnText: "Create"
+    });
+  }
+
   renderPartial(cipherText, keyObj) {
-    var fileExtension = moment().format("YYYYMMDDHHmmss") + ".sew";
+    var fileExtension = moment().format("YYYYMMDDHHmmss") + ".txt";
     return (
-      <div class="card text-left">
-        <div class="card-header">
+      <div className="card text-left">
+        <div className="card-header">
           <strong>
             <p>
               The Results Table provides the information that enables you to
@@ -51,50 +61,58 @@ class CreateWallet extends Component {
             <li>Print this page and store the printed document safely</li>
           </ol>
         </div>
-        <div class="card-body" align="center">
+        <div className="card-body" align="center">
           <table>
-            <th>
-              <b>Results Table:</b>
-            </th>
-            <tr className="table-info">
-              <td class="col-sd-4">Your public address:</td>
-              <td class="col-sd-8">{this.state.address}</td>
-            </tr>
-            <tr className="table-info">
-              <td class="col-sd-4">Your private Key:</td>
-              <td class="col-sd-8">{this.state.privateKey}</td>
-            </tr>
-            <tr className="table-info">
-              <td class="col-sd-4">Your recovery passphrase:</td>
-              <td class="col-sd-8">{this.state.mnemonic}</td>
-            </tr>
+            <thead>
+              <tr>
+                <th>
+                  <b>Results Table:</b>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="table-info">
+                <td className="col-sd-4">Your public address:</td>
+                <td className="col-sd-8">{this.state.address}</td>
+              </tr>
+              <tr className="table-info">
+                <td className="col-sd-4">Your private Key:</td>
+                <td className="col-sd-8">{this.state.privateKey}</td>
+              </tr>
+              <tr className="table-info">
+                <td className="col-sd-4">Your recovery passphrase:</td>
+                <td className="col-sd-8">{this.state.mnemonic}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
-        <div class="card-footer text-muted">
+        <div className="card-footer text-muted">
           <table>
-            <tr>
-              <td>
-                <Download
-                  file={"SEW-encrypted-" + fileExtension}
-                  content={cipherText}
-                >
-                  <button type="button" class="btn btn-danger">
-                    Save Encrypted results table to local file
-                  </button>
-                </Download>
-              </td>
-              <td />
-              <td>
-                <Download
-                  file={"SEW-plaintext-" + fileExtension}
-                  content={JSON.stringify(keyObj)}
-                >
-                  <button type="button" class="btn btn-danger">
-                    Save Plain Text results table to local file
-                  </button>
-                </Download>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>
+                  <Download
+                    file={"SEW-encrypted-" + fileExtension}
+                    content={cipherText}
+                  >
+                    <button type="button" className="btn btn-danger">
+                      Save Encrypted results table to local file
+                    </button>
+                  </Download>
+                </td>
+                <td />
+                <td>
+                  <Download
+                    file={"SEW-plaintext-" + fileExtension}
+                    content={JSON.stringify(keyObj)}
+                  >
+                    <button type="button" className="btn btn-danger">
+                      Save Plain Text results table to local file
+                    </button>
+                  </Download>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -112,12 +130,15 @@ class CreateWallet extends Component {
         privateKey: this.state.privateKey,
         mnemonic: this.state.mnemonic
       };
+      try {
+        const cipherText = encryptObj(keyObj, this.state.password);
+        const plainObj = JSON.parse(decrypt(cipherText, this.state.password));
 
-      const cipherText = encryptObj(keyObj, this.state.password);
-      const plainObj = JSON.parse(decrypt(cipherText, this.state.password));
-
-      //display query results and save button
-      var partial = this.renderPartial(cipherText, plainObj);
+        //display query results and save button
+        partial = this.renderPartial(cipherText, plainObj);
+      } catch (e) {
+        alert("Error: Invalid crypto operation - " + e.message);
+      }
     }
 
     return (
@@ -176,7 +197,7 @@ class CreateWallet extends Component {
     this.refs.btn.setAttribute("disabled", "disabled");
     this.setState({ btnText: "Processing ..." });
     try {
-      const wallet = await createWallet(this.state.password);
+      const wallet = await createWallet();
       this.setState({
         address: wallet.address,
         mnemonic: wallet.mnemonic,
@@ -188,8 +209,7 @@ class CreateWallet extends Component {
     }
     this.refs.btn.removeAttribute("disabled");
     this.setState({
-      btnText: "Create",
-      password: ""
+      btnText: "Create"
     });
   }
 

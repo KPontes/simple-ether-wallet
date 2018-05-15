@@ -16,6 +16,7 @@ const Contact = () => {
                 src="/images/github.png"
                 height="40"
                 width="40"
+                alt=""
                 className="cursor-pointer"
               />
             </Link>
@@ -26,6 +27,7 @@ const Contact = () => {
                 src="/images/email.png"
                 height="40"
                 width="40"
+                alt=""
                 className="cursor-pointer"
               />
             </Link>
@@ -39,6 +41,7 @@ const Contact = () => {
                 src="/images/faq.png"
                 height="40"
                 width="40"
+                alt=""
                 className="cursor-pointer"
               />
             </Link>
@@ -52,12 +55,13 @@ const Contact = () => {
                 src="/images/linkedin.png"
                 height="40"
                 width="40"
+                alt=""
                 className="cursor-pointer"
               />
             </Link>
           </div>
           <div className="col-md-8">
-            <img src="/images/donate.png" className="cursor-pointer" />
+            <img src="/images/donate.png" className="cursor-pointer" alt="" />
             <br />SEW depends on the conciousness of users to keep providing a
             free service. Please support us by donating Ethereum or Bitcoin to
             the following addresses:
