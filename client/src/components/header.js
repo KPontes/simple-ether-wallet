@@ -6,7 +6,7 @@ const Header = props => {
     <div style={{ margin: "10px" }}>
       <ul className="nav nav-pills nav-fill">
         <li className="nav-item">
-          <img src="/images/SEW-logo.png" height="42" width="70" alt="" />
+          <img src="/images/SPW-logo.png" height="42" width="70" alt="" />
         </li>
         <li className="nav-item">
           <Link

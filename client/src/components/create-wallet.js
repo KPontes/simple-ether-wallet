@@ -45,8 +45,8 @@ class CreateWallet extends Component {
               access your funds, send and receive ETHER with this wallet.
             </p>
             Take the three actions bellow and make sure you store saved files
-            and printout safely. Simple Ether Wallet can not recover them for
-            you in case of loss:
+            and printout safely. Simple Pay Wallet can not recover them for you
+            in case of loss:
           </strong>
           <p />
           <ol>
@@ -92,7 +92,7 @@ class CreateWallet extends Component {
               <tr>
                 <td>
                   <Download
-                    file={"SEW-encrypted-" + fileExtension}
+                    file={"SPW-encrypted-" + fileExtension}
                     content={cipherText}
                   >
                     <button type="button" className="btn btn-danger">
@@ -103,7 +103,7 @@ class CreateWallet extends Component {
                 <td />
                 <td>
                   <Download
-                    file={"SEW-plaintext-" + fileExtension}
+                    file={"SPW-plaintext-" + fileExtension}
                     content={JSON.stringify(keyObj)}
                   >
                     <button type="button" className="btn btn-danger">
@@ -237,8 +237,8 @@ class CreateWallet extends Component {
           encrypted file, avoiding to corrupt it.
         </p>
         <p>
-          SEW does not hold your keys, so we can not recover keys or reset
-          password. Note that SEW can not access your account nor reverse
+          SPW does not hold your keys, so we can not recover keys or reset
+          password. Note that SPW can not access your account nor reverse
           transactions.
         </p>
       </div>

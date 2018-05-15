@@ -62,7 +62,7 @@ const Contact = () => {
           </div>
           <div className="col-md-8">
             <img src="/images/donate.png" className="cursor-pointer" alt="" />
-            <br />SEW depends on the conciousness of users to keep providing a
+            <br />SPW depends on the conciousness of users to keep providing a
             free service. Please support us by donating Ethereum or Bitcoin to
             the following addresses:
             <p />ETH:{" "}

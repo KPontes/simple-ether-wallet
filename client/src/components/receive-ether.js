@@ -12,11 +12,11 @@ const ReceiveEther = props => {
       <p>You may check your ethereum public address by:</p>
       <ol>
         <li>
-          Verifying the SEW-plaintext file, that you saved on the Create Wallet
+          Verifying the SPW-plaintext file, that you saved on the Create Wallet
           operation.
         </li>
         <li>
-          Or typing your password and opening the SEW-encrypted file, also saved
+          Or typing your password and opening the SPW-encrypted file, also saved
           during the Create Wallet operation.
         </li>
       </ol>

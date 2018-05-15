@@ -12,14 +12,14 @@ class Home extends Component {
     return (
       <div className="container">
         <div className="home-div">
-          This is Simple Ether Wallet (SEW), designed to be safe, straight
-          forward and user friendly. This wallet provides just a browser
-          front-end interface, empowering you to make transactions on the
-          Ethereum blockchain network. SEW does not save passwords nor private
-          keys into any backend server.
+          This is Simple Pay Wallet (SPW), designed to be safe, straight forward
+          and user friendly. This wallet provides just a browser front-end
+          interface, empowering you to make transactions on the Ethereum
+          blockchain network. SPW does not save passwords nor private keys into
+          any backend server.
         </div>
         <div align="center">
-          <img src="/images/SEW.jpg" alt="" />
+          <img src="/images/SPW.jpg" alt="" />
         </div>
         <p />
 
@@ -32,7 +32,7 @@ class Home extends Component {
     return (
       <div>
         Before Send or Receive ether, you need to Create a Wallet, by providing
-        a personal password. This enable SEW to generate an Ethereum public
+        a personal password. This enable SPW to generate an Ethereum public
         address and private key. Print your keys information and save your your
         keys file in a safe storage. You will need your public address to access
         your balance, and to receive funds. Analogously, you will need the
