@@ -10,6 +10,7 @@ import Help from "./help";
 var allowedFileTypes = ["text/plain"]; //, "image/jpeg", "image/gif"];
 
 function fileIsIncorrectFiletype(file) {
+  console.log("type", file);
   if (allowedFileTypes.indexOf(file.type) === -1) {
     return true;
   } else {

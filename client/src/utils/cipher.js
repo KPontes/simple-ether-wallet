@@ -28,3 +28,7 @@ export function decrypt(ciphertext, key) {
     throw e;
   }
 }
+
+export function testsum(a, b) {
+  return a + b;
+}

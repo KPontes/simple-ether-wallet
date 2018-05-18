@@ -45,4 +45,4 @@ Other installed packages:
 @axetroy/react-download crypto-js react-simple-file-input moment react-bootstrap
 validator
 
-also available, but not used > js-file-download
+jest on the client
