@@ -1,4 +1,5 @@
 const express = require("express");
+var sslRedirect = require("heroku-ssl-redirect");
 const app = express();
 
 app.get("/express", (req, res) => {
@@ -6,6 +7,7 @@ app.get("/express", (req, res) => {
 });
 
 if (process.env.NODE_ENV === "production") {
+  app.use(sslRedirect());
   // Express will serve up production assets
   // like our main.js file, or main.css file!
   app.use(express.static("client/build"));
