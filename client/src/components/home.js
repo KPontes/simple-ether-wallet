@@ -15,7 +15,7 @@ const browserHandler = {
       {" "}
       <font color="#873468">
         <small>
-          {browser} is not a homologated browser. Please try chrome, firefox,
+          {browser} is not an homologated browser. Please try chrome, firefox,
           safari or edge!!!
         </small>
       </font>
@@ -32,30 +32,28 @@ class Home extends Component {
     slides[2] = this.thirdSlide();
     return (
       <div className="container">
-        <div className="card-table">
-          <div className="row">
-            <div className="col-md-9">
-              <BrowserDetection>{browserHandler}</BrowserDetection>
-              <div className="home-div">
-                This is Simple Pay Wallet (SPW), designed to be safe, straight
-                forward and user friendly. This wallet provides just a browser
-                front-end interface, empowering you to make transactions on the
-                Ethereum blockchain network. SPW does not save passwords nor
-                private keys into any backend server.
-              </div>
-            </div>
-            <div className="col-md-3">
-              <TokenInfo />
+        <div className="row">
+          <div className="col-md-9">
+            <BrowserDetection>{browserHandler}</BrowserDetection>
+            <div className="home-div">
+              This is Simple Pay Wallet (SPW), designed to be safe, straight
+              forward and user friendly. This wallet provides just a browser
+              front-end interface, empowering you to make transactions on the
+              Ethereum blockchain network. SPW does not save passwords nor
+              private keys into any backend server.
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div align="center">
-                <img src="/images/SPW.jpg" alt="" />
-              </div>
-              <p />
-              <ControlledCarrousel slides={slides} />
+          <div className="col-md-3">
+            <TokenInfo />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div align="center">
+              <img src="/images/SPW.jpg" alt="" />
             </div>
+            <p />
+            <ControlledCarrousel slides={slides} />
           </div>
         </div>
       </div>
