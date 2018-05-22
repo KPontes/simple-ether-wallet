@@ -47,14 +47,14 @@ class Home extends Component {
             <div className="col-md-3">
               <TokenInfo />
             </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div align="center">
-                  <img src="/images/SPW.jpg" alt="" />
-                </div>
-                <p />
-                <ControlledCarrousel slides={slides} />
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div align="center">
+                <img src="/images/SPW.jpg" alt="" />
               </div>
+              <p />
+              <ControlledCarrousel slides={slides} />
             </div>
           </div>
         </div>
