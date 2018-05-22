@@ -41,12 +41,12 @@ class CreateWallet extends Component {
         <div className="card-header">
           <strong>
             <p>
-              The Results Table provides the information that enables you to
-              access your funds, send and receive ETHER with this wallet.
+              The Results Table provide the information that enables you to
+              access your funds, send and receive ETHER within this wallet.
+              Simple Pay Wallet can not recover this information in case of
+              loss.
             </p>
-            Take the three actions bellow and make sure you store saved files
-            and printout safely. Simple Pay Wallet can not recover them for you
-            in case of loss:
+            Take the three actions below:
           </strong>
           <p />
           <ol>

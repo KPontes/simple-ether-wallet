@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -15,10 +16,12 @@ const Footer = () => {
               </div>
               <div className="col-md-1" />
               <div className="col-md-5">
-                <img src="/images/donatepq.png" alt="" /> SPW depends on the
-                conciousness of users to keep providing a free service. Please
-                support us by donating Ethereum or Bitcoin to the following
-                addresses:
+                <Link to="/sendether">
+                  <img src="/images/donatepq.png" alt="" />
+                </Link>{" "}
+                SPW depends on the conciousness of users to keep providing a
+                free service. Please support us by donating Ethereum or Bitcoin
+                to the following addresses:
                 <p />ETH:{" "}
                 <font color="#000077">
                   0x02D23d435cAE96924a4a7b7C46e1A674b6E3c2FD{" "}

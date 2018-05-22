@@ -77,7 +77,7 @@
   border: 0px solid rgba(0, 0, 0, 0.3);
 }
 
-.prd-message-div {
+.prd-maintenance-div {
   border: 0px solid rgba(0, 0, 0, 1);
   align: center;
   text-align: center;
@@ -85,6 +85,13 @@
 
 .home-div {
   background-color: #5b6375;
+  color: white;
+  margin: 15px;
+  padding: 10px;
+}
+
+.tokeninfo-div {
+  background-color: #000066;
   color: white;
   margin: 15px;
   padding: 10px;

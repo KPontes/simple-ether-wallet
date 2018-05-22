@@ -27,7 +27,6 @@ class ControlledCarousel extends React.Component {
         partialSlide = this.getSlide(1);
         break;
     }
-    console.log("props: ", this.props);
 
     return (
       <div>
@@ -41,7 +40,7 @@ class ControlledCarousel extends React.Component {
                 className="btn btn-primary cursor-pointer"
                 onClick={event => this.handleClick()}
               >
-                <span style={{ fontSize: "24px" }}>></span>
+                <span style={{ fontSize: "18px" }}>></span>
               </button>
             </div>
           </div>

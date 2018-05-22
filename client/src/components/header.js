@@ -29,7 +29,7 @@ const Header = props => {
                 : "nav-link"
             }
           >
-            create Wallet
+            Create Wallet
           </Link>
         </li>
         <li className="nav-item">
@@ -42,7 +42,7 @@ const Header = props => {
                 : "nav-link"
             }
           >
-            view Balance
+            View Balance
           </Link>
         </li>
         <li className="nav-item">
@@ -55,7 +55,7 @@ const Header = props => {
                 : "nav-link"
             }
           >
-            send Ether
+            Send Ether
           </Link>
         </li>
         <li className="nav-item">
@@ -68,7 +68,7 @@ const Header = props => {
                 : "nav-link"
             }
           >
-            receive Ether
+            Receive Ether
           </Link>
         </li>
         <li className="nav-item">
@@ -86,7 +86,7 @@ const Header = props => {
         </li>
       </ul>
       <br />
-      <div className="prd-message-div">
+      <div className="prd-maintenance-div">
         <font color="red">
           *** This wallet is on Beta-Test, currently it is using the Rinkeby
           Test Network. Do not make real Ether operation yet. ***

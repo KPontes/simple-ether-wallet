@@ -263,7 +263,7 @@ class SendEtherChoice extends Component {
           inputs for typing the destination address and amount to be transfered.
         </p>
         <p>
-          The Results Panel will provide you a confirmation with the transaction
+          A Result Panel will provide you a confirmation with the transaction
           id.
         </p>
       </div>

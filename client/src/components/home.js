@@ -1,6 +1,27 @@
 import React, { Component } from "react";
+import BrowserDetection from "react-browser-detection";
 
 import ControlledCarrousel from "./controlled-carrousel";
+import TokenInfo from "./tokenInfo";
+
+const browserHandler = {
+  //chrome, firefox, ie, edge, safari, opera, blink, googlebot and default
+  chrome: () => <div />,
+  firefox: () => <div />,
+  edge: () => <div />,
+  safari: () => <div />,
+  default: browser => (
+    <div align="right">
+      {" "}
+      <font color="#873468">
+        <small>
+          {browser} is not a homologated browser. Please try chrome, firefox,
+          safari or edge!!!
+        </small>
+      </font>
+    </div>
+  )
+};
 
 //Functional component take props as an argument
 class Home extends Component {
@@ -11,19 +32,32 @@ class Home extends Component {
     slides[2] = this.thirdSlide();
     return (
       <div className="container">
-        <div className="home-div">
-          This is Simple Pay Wallet (SPW), designed to be safe, straight forward
-          and user friendly. This wallet provides just a browser front-end
-          interface, empowering you to make transactions on the Ethereum
-          blockchain network. SPW does not save passwords nor private keys into
-          any backend server.
+        <div className="card-table">
+          <div className="row">
+            <div className="col-md-9">
+              <BrowserDetection>{browserHandler}</BrowserDetection>
+              <div className="home-div">
+                This is Simple Pay Wallet (SPW), designed to be safe, straight
+                forward and user friendly. This wallet provides just a browser
+                front-end interface, empowering you to make transactions on the
+                Ethereum blockchain network. SPW does not save passwords nor
+                private keys into any backend server.
+              </div>
+            </div>
+            <div className="col-md-3">
+              <TokenInfo />
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div align="center">
+                  <img src="/images/SPW.jpg" alt="" />
+                </div>
+                <p />
+                <ControlledCarrousel slides={slides} />
+              </div>
+            </div>
+          </div>
         </div>
-        <div align="center">
-          <img src="/images/SPW.jpg" alt="" />
-        </div>
-        <p />
-
-        <ControlledCarrousel slides={slides} />
       </div>
     );
   }
@@ -59,7 +93,7 @@ class Home extends Component {
         With the unlocked wallet, you will be able to enter the destination
         address and the amount to be transfered.
         <br />
-        The Results Panel will provide a confirmation with the transaction id.
+        A Result Panel will provide a confirmation with the transaction id.
       </div>
     );
   }

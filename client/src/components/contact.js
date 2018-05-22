@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Contact = () => {
-  var content = content();
+  var displayContent = content();
   return (
     <div className="container">
       <p>CONTACT</p>
@@ -73,7 +73,7 @@ const Contact = () => {
             </Link>
           </div>
           <div className="col-md-2" />
-          <div className="col-md-5">{content}</div>
+          <div className="col-md-5">{displayContent}</div>
         </div>
       </div>
       <p />

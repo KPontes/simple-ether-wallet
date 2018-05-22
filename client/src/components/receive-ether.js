@@ -86,7 +86,7 @@ class ReceiveEther extends Component {
             Verifying the page that you printed on the Create Wallet operation.
           </li>
           <li>
-            Or type your password on the input bellow and open the SPW-encrypted
+            Or type your password on the input below and open the SPW-encrypted
             file, also saved during the Create Wallet operation.
           </li>
         </ol>
