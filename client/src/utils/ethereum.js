@@ -1,10 +1,16 @@
 import ethers from "ethers";
-
-const NETWORK = "rinkeby";
 const providers = ethers.providers;
+
+let NETWORK;
+if (process.env.NODE_ENV === "production") {
+  NETWORK = "homestead";
+} else {
+  NETWORK = "rinkeby";
+}
 
 export async function viewAddressInfo(keysObj) {
   try {
+    console.log("Network: ", NETWORK);
     //query balance by address or pk
     let balance;
     let wallet;
@@ -49,7 +55,7 @@ export async function sendEther(pk, toAddress, etherValue) {
   // We must pass in the amount as wei, so need to convert ether to wei.
   var amount = ethers.utils.parseEther(etherValue);
   var options = {
-    gasLimit: 21000
+    gasLimit: 40000
     //gasPrice: utils.bigNumberify("20000000000")
   };
   try {

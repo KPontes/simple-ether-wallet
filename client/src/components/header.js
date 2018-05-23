@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = props => {
+  var importantMessage = "";
+  if (process.env.NODE_ENV !== "production") {
+    importantMessage =
+      "*** This wallet is currently using the Rinkeby Test Network. Do not make real Ether operation. ***";
+  }
+
   return (
     <div style={{ margin: "10px" }}>
       <ul className="nav nav-pills nav-fill">
@@ -85,12 +91,8 @@ const Header = props => {
           </Link>
         </li>
       </ul>
-      <br />
       <div className="prd-maintenance-div">
-        <font color="red">
-          *** This wallet is on Beta-Test, currently it is using the Rinkeby
-          Test Network. Do not make real Ether operation yet. ***
-        </font>
+        <font color="red">{importantMessage}</font>
       </div>
       <hr style={{ border: "1px solid black" }} />
     </div>

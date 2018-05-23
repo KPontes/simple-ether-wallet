@@ -18,8 +18,12 @@ class Address extends Component {
   }
 
   componentDidMount() {
+    var address = "";
+    if (this.props.address) {
+      address = this.props.address;
+    }
     this.setState({
-      address: this.props.address,
+      address,
       balance: "",
       previousAddress: ""
     });

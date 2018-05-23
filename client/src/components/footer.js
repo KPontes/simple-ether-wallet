@@ -24,7 +24,7 @@ const Footer = () => {
                 to the following addresses:
                 <p />ETH:{" "}
                 <font color="#000077">
-                  0x02D23d435cAE96924a4a7b7C46e1A674b6E3c2FD{" "}
+                  0x60d48586D99F16661f09AE9cA6AbaC3d636b26e2{" "}
                 </font>
                 <br />BTC:{" "}
                 <font color="#000077">
