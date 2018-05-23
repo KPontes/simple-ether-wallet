@@ -107,7 +107,7 @@ class Address extends Component {
               }`}
               target="_blank"
             >
-              Click for Transaction History
+              Click for Address History
             </a>
           </p>
         </div>

@@ -9,7 +9,7 @@ class SendEtherResult extends Component {
       var toAddress = "/balance/" + this.props.address;
       return (
         <div className="presentation-div">
-          TRANSACTION RESULTS FROM THE BLOCKCHAIN <br />
+          <strong>Transaction Results from the Blockchain</strong> <br />
           <div className="card-table input-margin">
             <div className="row">
               <div className="col-md-2">
@@ -39,10 +39,21 @@ class SendEtherResult extends Component {
             </div>
           </div>
           <div align="right" className="mr-5">
-            <span> Wait two minutes and </span>
+            <span>
+              {" "}
+              Your transaction was broadcasted to network. Wait some minutes and{" "}
+            </span>
             <Link to={toAddress} id="balance">
-              view New Balance
+              check New Balance
             </Link>
+            <p>
+              <a
+                href={`https://etherscan.io/tx/${this.props.transaction.hash}`}
+                target="_blank"
+              >
+                Click for Transaction monitoring
+              </a>
+            </p>
           </div>
         </div>
       );
